@@ -72,3 +72,5 @@ app.use("/exposiciones", exposicionesRouter);
 app.use("/museos", museosRouter);
 app.use("/pintores", pintoresRouter);
 app.use("/auth", authRouter);
+
+export default app
