@@ -1,6 +1,7 @@
 {
   "name": "grupsexpress",
   "version": "1.0.0",
+  "type": "module",
   "description": "Proyecto Servidor: Exposiciones temporales",
   "main": "index.js",
   "scripts": {
