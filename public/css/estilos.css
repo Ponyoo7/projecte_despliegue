@@ -1,0 +1,111 @@
+body {
+    background-color: #FDFBF7;
+    /* Blanco Perla suave */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #555;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #957DAD;
+}
+
+/* Navbar o Menú */
+.alert-secondary {
+    background-color: #E6E6FA;
+    /* Lila Pastel */
+    border-color: #DCD0FF;
+    color: #555;
+}
+
+.alert-secondary a {
+    color: #6A5ACD;
+    /* SlateBlue para contraste */
+    font-weight: bold;
+}
+
+/* Botones */
+.btn-primary {
+    background-color: #FFD1DC;
+    /* Rosa Pastel */
+    border-color: #FFC0CB;
+    color: #555;
+}
+
+.btn-primary:hover {
+    background-color: #FFB7C5;
+    border-color: #FFB7C5;
+    color: #333;
+}
+
+.btn-success {
+    background-color: #bfb6e7;
+    /* Verde Pastel (Menta) */
+    border-color: #a890d4;
+    color: #555;
+}
+
+.btn-success:hover {
+    background-color: #6d4c83;
+    border-color: #3b2752;
+    color: #333;
+}
+
+.btn-warning {
+    background-color: #f3f3ae;
+    /* Amarillo Pastel */
+    border-color: #bbbb99;
+    color: #555;
+}
+
+.btn-warning:hover {
+    background-color: #FFFFE0;
+    border-color: #FFFFE0;
+    color: #333;
+}
+
+.btn-danger {
+    background-color: #FF6961;
+    /* Rojo Pastel */
+    border-color: #FF6961;
+}
+
+/* Tarjetas y Listas */
+.card {
+    background-color: #FFF0F5;
+    /* Lavanda rojiza muy clara (casi rosa) */
+    border: 1px solid #E6E6FA;
+}
+
+.list-group-item {
+    background-color: #FFFFFF;
+    border-color: #E6E6FA;
+}
+
+.list-group-item:hover {
+    /* AliceBlue */
+}
+
+/* Custom Lilac helpers */
+.bg-lila {
+    background-color: #E6E6FA;
+    border-color: #DCD0FF;
+    color: #555;
+}
+
+.btn-lila {
+    background-color: #E6E6FA;
+    border-color: #DCD0FF;
+    color: #555;
+    transition: all 0.3s ease;
+}
+
+.btn-lila:hover {
+    background-color: #d1c4e9;
+    border-color: #b39ddb;
+    color: #333;
+}

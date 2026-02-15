@@ -1,0 +1,46 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Nuevo Pintor{% endblock %}
+
+{% block contenido %}
+    <h1>Nuevo Pintor</h1>
+
+    {% if errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error.msg }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form action="/pintores" method="POST" class="mt-4" style="max-width: 500px;">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" value="{{ datos.nombre }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="estiloArtistico" class="form-label">Estilo Artístico:</label>
+            <select id="estiloArtistico" name="estiloArtistico" class="form-select" required>
+                <option value="" disabled {% if not datos.estiloArtistico %}selected{% endif %}>Seleccione un estilo</option>
+                <option value="Impresionismo" {% if datos.estiloArtistico == 'Impresionismo' %}selected{% endif %}>Impresionismo</option>
+                <option value="Realismo" {% if datos.estiloArtistico == 'Realismo' %}selected{% endif %}>Realismo</option>
+                <option value="Expresionismo" {% if datos.estiloArtistico == 'Expresionismo' %}selected{% endif %}>Expresionismo</option>
+                <option value="Cubismo" {% if datos.estiloArtistico == 'Cubismo' %}selected{% endif %}>Cubismo</option>
+                <option value="Surrealismo" {% if datos.estiloArtistico == 'Surrealismo' %}selected{% endif %}>Surrealismo</option>
+                <option value="Abstracto" {% if datos.estiloArtistico == 'Abstracto' %}selected{% endif %}>Abstracto</option>
+                <option value="Renacimiento" {% if datos.estiloArtistico == 'Renacimiento' %}selected{% endif %}>Renacimiento</option>
+                <option value="Otro" {% if datos.estiloArtistico == 'Otro' %}selected{% endif %}>Otro</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
+            <input type="text" id="fechaNacimiento" name="fechaNacimiento" class="form-control" value="{{ datos.fechaNacimiento }}" required>
+        </div>
+
+        <button type="submit" class="btn btn-success">Crear Pintor</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Gestión de Usuarios{% endblock %}
+
+{% block contenido %}
+    <h1 class="mb-4">Gestión de Usuarios</h1>
+    
+    <div class="d-flex gap-2 mb-3">
+        <a href="/cuadros" class="btn btn-secondary">← Volver</a>
+        
+        {% if usuarios.length > 1 %}
+            <form action="/auth/usuarios" method="POST" style="display:inline;" 
+                  onsubmit="return confirm('¿Estás seguro de eliminar TODOS los usuarios excepto tu cuenta? Esta acción no se puede deshacer.')">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" class="btn btn-danger">
+                    🗑️ Eliminar todos los usuarios
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <strong>Total de usuarios:</strong> {{ usuarios.length }}
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 25%;">Nombre</th>
+                        <th style="width: 30%;">Email</th>
+                        <th style="width: 15%;">Rol</th>
+                        <th style="width: 15%;">Favoritos</th>
+                        <th style="width: 15%;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                        <tr class="{{ 'table-primary' if usuario._id.toString() == user._id.toString() else '' }}">
+                            <td>
+                                {{ usuario.username }}
+                                {% if usuario._id.toString() == user._id.toString() %}
+                                    <span class="badge bg-info">Tú</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ usuario.email }}</td>
+                            <td>
+                                {% if usuario.role == 'admin' %}
+                                    <span class="badge bg-danger">Admin</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Usuario</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge bg-warning text-dark">
+                                    {{ usuario.favoriteCuadros.length }} cuadros
+                                </span>
+                            </td>
+                            <td>
+                                {% if usuario._id.toString() != user._id.toString() %}
+                                    <form action="/auth/usuarios/{{ usuario._id }}" method="POST" style="display:inline;"
+                                          onsubmit="return confirm('¿Eliminar el usuario {{ usuario.username }}?')">
+                                        <input type="hidden" name="_method" value="delete">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center">No hay usuarios registrados.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

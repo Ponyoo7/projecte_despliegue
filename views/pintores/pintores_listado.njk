@@ -1,0 +1,48 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Listado de Pintores{% endblock %}
+
+{% block contenido %}
+    <h1 class="mb-4">Listado de Pintores</h1>
+    
+    {% if isAdmin %}
+        <a href="/pintores/nuevo" class="btn btn-success mb-3">Nuevo Pintor</a>
+    {% endif %}
+    
+    <table class="table table-striped table-hover w-100">
+        <thead>
+            <tr>
+                <th style="width: 40%;">Nombre</th>
+                <th style="width: 40%;">Estilo Artístico</th>
+                {% if isAdmin %}
+                    <th style="width: 20%;">Acciones</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for pintor in pintores %}
+                <tr>
+                    <td>
+                        <a href="/pintores/{{ pintor._id }}" class="fw-bold text-decoration-none">
+                            {{ pintor.nombre }}
+                        </a>
+                    </td>
+                    <td>{{ pintor.estiloArtistico }}</td>
+                    {% if isAdmin %}
+                        <td>
+                            <a href="/pintores/editar/{{ pintor._id }}" class="btn btn-warning btn-sm">Editar</a>
+                            <form action="/pintores/{{ pintor._id }}" method="POST" style="display: inline;">
+                                <input type="hidden" name="_method" value="delete">
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">No hay pintores registrados.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Listado de Cuadros{% endblock %}
+
+{% block contenido %}
+    <h1>Listado de Cuadros</h1>
+    
+    <div class="d-flex gap-2 mb-3">
+        {% if isAdmin %}
+            <a href="/cuadros/nuevo" class="btn btn-success">Nuevo Cuadro</a>
+        {% endif %}
+        {% if user %}
+            <a href="/cuadros/favoritos" class="btn btn-outline-danger">
+                ❤️ Mis Favoritos
+            </a>
+        {% endif %}
+    </div>
+
+    <table class="table table-striped table-hover w-100">
+        <thead>
+            <tr>
+                <th style="width: 35%;">Título</th>
+                <th style="width: 20%;">Pintor</th>
+                <th style="width: 10%;">Año</th>
+                {% if user %}
+                    <th style="width: 10%;">Favorito</th>
+                {% endif %}
+                {% if isAdmin %}
+                    <th style="width: 20%;">Acciones</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for cuadro in cuadros %}
+                <tr>
+                    <td>
+                        <a href="/cuadros/{{ cuadro._id }}" class="fw-bold text-decoration-none">
+                            {{ cuadro.titulo }}
+                        </a>
+                    </td>
+                    <td>{{ cuadro.pintor.nombre }}</td>
+                    <td>{{ cuadro.anyoCreacion }}</td>
+                    {% if user %}
+                        <td>
+                            <button 
+                                class="btn btn-sm favorite-btn" 
+                                data-cuadro-id="{{ cuadro._id }}"
+                                title="Marcar como favorito"
+                            >
+                                {% if cuadro._id.toString() in favoriteCuadros %}
+                                    <span class="heart-icon">❤️</span>
+                                {% else %}
+                                    <span class="heart-icon">🤍</span>
+                                {% endif %}
+                            </button>
+                        </td>
+                    {% endif %}
+                    {% if isAdmin %}
+                        <td>
+                            <a href="/cuadros/editar/{{ cuadro._id }}" class="btn btn-warning btn-sm">Editar</a>
+                            <form action="/cuadros/{{ cuadro._id }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="_method" value="delete">
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">No hay cuadros registrados.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block css %}
+<style>
+    .favorite-btn {
+        background: transparent;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+    .favorite-btn:hover {
+        transform: scale(1.2);
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const favoriteButtons = document.querySelectorAll('.favorite-btn');
+    
+    favoriteButtons.forEach(button => {
+        button.addEventListener('click', async function() {
+            const cuadroId = this.dataset.cuadroId;
+            const heartIcon = this.querySelector('.heart-icon');
+            
+            try {
+                const response = await fetch(`/cuadros/toggle-favorite/${cuadroId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': localStorage.getItem('token') || ''
+                    }
+                });
+                
+                if (response.ok) {
+                    // Toggle heart icon
+                    if (heartIcon.textContent === '❤️') {
+                        heartIcon.textContent = '🤍';
+                    } else {
+                        heartIcon.textContent = '❤️';
+                    }
+                } else {
+                    console.error('Error al actualizar favorito');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

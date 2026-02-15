@@ -1,0 +1,89 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Crear Cuenta{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow">
+            <div class="card-header bg-lila text-white">
+                <h4 class="mb-0 text-center">Crear Cuenta</h4>
+            </div>
+            <div class="card-body">
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+                <form action="/auth/register" method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nombre de Usuario</label>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="username" 
+                            name="username" 
+                            placeholder="Tu nombre"
+                            value="{{ datos.username if datos else '' }}"
+                            minlength="5"
+                            required
+                        >
+                        <div class="form-text">Mínimo 5 caracteres</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input 
+                            type="email" 
+                            class="form-control" 
+                            id="email" 
+                            name="email" 
+                            placeholder="tu@email.com"
+                            value="{{ datos.email if datos else '' }}"
+                            required
+                        >
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input 
+                            type="password" 
+                            class="form-control" 
+                            id="password" 
+                            name="password" 
+                            placeholder="••••••••"
+                            minlength="5"
+                            required
+                        >
+                        <div class="form-text">Mínimo 5 caracteres</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+                        <input 
+                            type="password" 
+                            class="form-control" 
+                            id="confirmPassword" 
+                            name="confirmPassword" 
+                            placeholder="••••••••"
+                            required
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn btn-lila w-100">
+                        Crear Cuenta
+                    </button>
+                </form>
+                
+                <hr>
+                
+                <p class="text-center mb-0">
+                    ¿Ya tienes cuenta? 
+                    <a href="/auth/login" class="text-decoration-none">Inicia sesión aquí</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

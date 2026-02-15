@@ -1,0 +1,24 @@
+{
+  "name": "grupsexpress",
+  "version": "1.0.0",
+  "description": "Proyecto Servidor: Exposiciones temporales",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --env-file=.env --watch index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "bootstrap": "^5.3.8",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "express-validator": "^7.3.1",
+    "jsonwebtoken": "^9.0.3",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.19.2",
+    "multer": "^2.0.2",
+    "nunjucks": "^3.2.4"
+  }
+}

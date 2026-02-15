@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Título por defecto{% endblock %}</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/estilos.css">
+    {% block css %}{% endblock %}
+</head>
+<body>
+    <div class="container mt-4">
+        {% include "menu.njk" %}
+        {% block contenido %}{% endblock %}
+    </div>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

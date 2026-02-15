@@ -1,0 +1,53 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Editar Cuadro{% endblock %}
+
+{% block contenido %}
+    <h1>Editar Cuadro</h1>
+
+    {% if errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error.msg }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form action="/cuadros/{{ cuadro._id }}" method="POST" class="mt-4" style="max-width: 500px;">
+        <input type="hidden" name="_method" value="put">
+        
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título:</label>
+            <input type="text" id="titulo" name="titulo" value="{{ cuadro.titulo }}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="anyoCreacion" class="form-label">Año de Creación:</label>
+            <input type="number" id="anyoCreacion" name="anyoCreacion" value="{{ cuadro.anyoCreacion }}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="tecnica" class="form-label">Técnica:</label>
+            <select id="tecnica" name="tecnica" class="form-select" required>
+                <option value="Óleo" {% if cuadro.tecnica == 'Óleo' %}selected{% endif %}>Óleo</option>
+                <option value="Acuarela" {% if cuadro.tecnica == 'Acuarela' %}selected{% endif %}>Acuarela</option>
+                <option value="Acrílico" {% if cuadro.tecnica == 'Acrílico' %}selected{% endif %}>Acrílico</option>
+                <option value="Carboncillo" {% if cuadro.tecnica == 'Carboncillo' %}selected{% endif %}>Carboncillo</option>
+                <option value="Otra" {% if cuadro.tecnica == 'Otra' %}selected{% endif %}>Otra</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="pintor" class="form-label">Pintor:</label>
+            <select id="pintor" name="pintor" class="form-select" required>
+                {% for pintor in pintores %}
+                    <option value="{{ pintor._id }}" {% if cuadro.pintor == pintor._id or cuadro.pintor._id == pintor._id %}selected{% endif %}>{{ pintor.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+{% endblock %}

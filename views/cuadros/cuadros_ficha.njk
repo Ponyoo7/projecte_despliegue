@@ -1,0 +1,79 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Detalle del Cuadro{% endblock %}
+
+{% block contenido %}
+    <h1>{{ cuadro.titulo }}</h1>
+    <div class="card" style="max-width: 600px;">
+        <div class="card-body">
+            <p class="card-text"><strong>Pintor:</strong> {{ cuadro.pintor.nombre }}</p>
+            <p class="card-text"><strong>Año de Creación:</strong> {{ cuadro.anyoCreacion }}</p>
+            <p class="card-text"><strong>Técnica:</strong> {{ cuadro.tecnica }}</p>
+            
+            <div class="d-flex gap-2 flex-wrap mt-3">
+                {% if user %}
+                    <button 
+                        class="btn btn-outline-danger favorite-btn" 
+                        data-cuadro-id="{{ cuadro._id }}"
+                    >
+                        {% if cuadro._id.toString() in favoriteCuadros %}
+                            <span class="heart-icon">❤️</span> Quitar de favoritos
+                        {% else %}
+                            <span class="heart-icon">🤍</span> Añadir a favoritos
+                        {% endif %}
+                    </button>
+                {% endif %}
+                
+                {% if isAdmin %}
+                    <a href="/cuadros/editar/{{ cuadro._id }}" class="btn btn-warning">Editar</a>
+                    <form action="/cuadros/{{ cuadro._id }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="_method" value="delete">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                {% endif %}
+                
+                <a href="/cuadros" class="btn btn-secondary">Volver al listado</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const favoriteButton = document.querySelector('.favorite-btn');
+    
+    if (favoriteButton) {
+        favoriteButton.addEventListener('click', async function() {
+            const cuadroId = this.dataset.cuadroId;
+            const heartIcon = this.querySelector('.heart-icon');
+            
+            try {
+                const response = await fetch(`/cuadros/toggle-favorite/${cuadroId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': localStorage.getItem('token') || ''
+                    }
+                });
+                
+                if (response.ok) {
+                    // Toggle heart icon and text
+                    if (heartIcon.textContent === '❤️') {
+                        heartIcon.textContent = '🤍';
+                        this.innerHTML = '<span class="heart-icon">🤍</span> Añadir a favoritos';
+                    } else {
+                        heartIcon.textContent = '❤️';
+                        this.innerHTML = '<span class="heart-icon">❤️</span> Quitar de favoritos';
+                    }
+                } else {
+                    console.error('Error al actualizar favorito');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Detalle del Pintor{% endblock %}
+
+{% block contenido %}
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">{{ pintor.nombre }}</h1>
+            <p class="card-text"><span class="fw-bold">Estilo Artístico:</span> {{ pintor.estiloArtistico }}</p>
+            <p class="card-text"><span class="fw-bold">Fecha de Nacimiento:</span> {{ pintor.fechaNacimiento }}</p>
+            <p class="card-text"><span class="fw-bold">ID:</span> {{ pintor._id }}</p>
+            
+            <div class="mt-3 d-flex gap-2 flex-wrap">
+                {% if isAdmin %}
+                    <a href="/pintores/editar/{{ pintor._id }}" class="btn btn-warning">Editar</a>
+                    <form action="/pintores/{{ pintor._id }}" method="POST" class="d-inline">
+                        <input type="hidden" name="_method" value="delete">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                {% endif %}
+                <a href="/pintores" class="btn btn-secondary">Volver al listado</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
