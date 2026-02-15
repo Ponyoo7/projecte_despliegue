@@ -69,8 +69,8 @@ app.use("/museos", museosRouter);
 app.use("/pintores", pintoresRouter);
 app.use("/auth", authRouter);
 
-// Iniciar el servidor solo en entorno local (no en Vercel)
-if (!process.env.VERCEL) {
+// Iniciar el servidor solo en entorno local (no en Vercel) y no en tests
+if (!process.env.VERCEL && process.env.NODE_ENV !== "test") {
   app.listen(8080);
   console.log("Aplicación escuchando en el puerto 8080");
 }
