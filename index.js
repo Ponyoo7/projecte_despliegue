@@ -3,7 +3,7 @@ import mongoose from "mongoose"; // Librería para modelar objetos de MongoDB
 import express from "express"; // Framework web para Node.js
 import nunjucks from "nunjucks"; // Motor de plantillas
 import { fileURLToPath } from "url";
-import { dirname } from "path";
+import { dirname, join } from "path";
 
 // Configuración para obtener __dirname en módulos ES
 const __filename = fileURLToPath(import.meta.url);
@@ -26,7 +26,7 @@ initializeDB();
 let app = express();
 
 // Configuración del motor de plantillas Nunjucks
-nunjucks.configure("views", {
+nunjucks.configure(join(__dirname, "views"), {
   autoescape: true, // Escapar HTML automáticamente por seguridad
   express: app, // Asignar la instancia de express
 });
@@ -62,10 +62,6 @@ app.use(express.static(__dirname + "/node_modules/bootstrap/dist")); // Servir B
 import { loadUserForViews } from "./lib/auth.js";
 app.use(loadUserForViews);
 
-// Iniciar el servidor en el puerto 8080
-app.listen(8080);
-console.log("Aplicación escuchando en el puerto 8080");
-
 // Asociación de rutas a la aplicación
 app.use("/cuadros", cuadrosRouter);
 app.use("/exposiciones", exposicionesRouter);
@@ -73,4 +69,10 @@ app.use("/museos", museosRouter);
 app.use("/pintores", pintoresRouter);
 app.use("/auth", authRouter);
 
-export default app
+// Iniciar el servidor solo en entorno local (no en Vercel)
+if (!process.env.VERCEL) {
+  app.listen(8080);
+  console.log("Aplicación escuchando en el puerto 8080");
+}
+
+export default app;
