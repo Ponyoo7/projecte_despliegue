@@ -1,11 +1,15 @@
 import request from "supertest";
 import app from "../index.js";
 import { initializeDB } from "../lib/db.js";
+import mongoose from "mongoose";
 
 beforeAll(async () => {
     await initializeDB();
 });
 
+afterAll(async () => {
+    await mongoose.connection.close();
+});
 
 describe("Public Routes", () => {
     it("should return 200/302 for homepage (redirects or shows content)", async () => {

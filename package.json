@@ -5,7 +5,7 @@
   "description": "Proyecto Servidor: Exposiciones temporales",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles",
     "start": "node --env-file=.env --watch index.js"
   },
   "author": "",
