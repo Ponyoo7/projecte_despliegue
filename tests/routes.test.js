@@ -11,7 +11,6 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-//HOlasd
 describe("Public Routes", () => {
   it("should return 200/302 for homepage (redirects or shows content)", async () => {
     const res = await request(app).get("/pintores");
