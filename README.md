@@ -61,4 +61,4 @@ Aquest projecte està sota la llicència [MIT](LICENSE).
 
 ## 🐛 Issues
 
-Per reportar bugs o sol·licitar noves funcionalitats, utilitzeu la pestanya [Issues](https://github.com/vostre-usuari/vostre-repositori/issues) d'aquest repositori.
+Per reportar bugs o sol·licitar noves funcionalitats, utilitzeu la pestanya [Issues](https://github.com//Ponyoo7/projecte_despliegue/issues) d'aquest repositori.
