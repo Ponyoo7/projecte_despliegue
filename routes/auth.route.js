@@ -6,8 +6,14 @@
 
 import express from "express";
 import bcrypt from "bcryptjs";
-import { encryptPassword, generateToken, protectedRoute, isAdmin } from "../lib/auth.js";
+import {
+  encryptPassword,
+  generateToken,
+  protectedRoute,
+  isAdmin,
+} from "../lib/auth.js";
 import User from "../models/user.model.js";
+//Prueba dev
 
 const router = express.Router();
 
@@ -36,7 +42,7 @@ router.post("/login", async (req, res) => {
     if (!userFound) {
       return res.render("auth/login.njk", {
         error: "El usuario no existe",
-        datos: { email }
+        datos: { email },
       });
     }
 
@@ -45,7 +51,7 @@ router.post("/login", async (req, res) => {
     if (!(await bcrypt.compare(password, userFound.password))) {
       return res.render("auth/login.njk", {
         error: "Las contraseñas no coinciden",
-        datos: { email }
+        datos: { email },
       });
     }
 
@@ -55,7 +61,7 @@ router.post("/login", async (req, res) => {
     // Guardar el token en una cookie segura
     res.cookie("token", token, {
       httpOnly: false, // Permitir acceso desde cliente si es necesario, idealmente true para más seguridad
-      maxAge: 86400000 // 24 horas
+      maxAge: 86400000, // 24 horas
     });
 
     return res.redirect("/cuadros");
@@ -79,7 +85,7 @@ router.post("/register", async (req, res) => {
     if (password !== confirmPassword) {
       return res.render("auth/register.njk", {
         error: "Las contraseñas no coinciden",
-        datos: { username, email }
+        datos: { username, email },
       });
     }
 
@@ -87,7 +93,7 @@ router.post("/register", async (req, res) => {
     if (password.length < 5) {
       return res.render("auth/register.njk", {
         error: "La contraseña debe tener al menos 5 caracteres",
-        datos: { username, email }
+        datos: { username, email },
       });
     }
 
@@ -98,7 +104,7 @@ router.post("/register", async (req, res) => {
     if (userFound) {
       return res.render("auth/register.njk", {
         error: "El email ya está registrado",
-        datos: { username, email }
+        datos: { username, email },
       });
     }
 
@@ -107,7 +113,7 @@ router.post("/register", async (req, res) => {
     if (usernameFound) {
       return res.render("auth/register.njk", {
         error: "El nombre de usuario ya está en uso",
-        datos: { username, email }
+        datos: { username, email },
       });
     }
 
@@ -122,13 +128,13 @@ router.post("/register", async (req, res) => {
     await newUser.save();
 
     return res.render("auth/login.njk", {
-      success: "Usuario creado correctamente. Ya puedes iniciar sesión."
+      success: "Usuario creado correctamente. Ya puedes iniciar sesión.",
     });
   } catch (error) {
     console.error(error);
     res.render("auth/register.njk", {
       error: "Error al crear el usuario",
-      datos: { username, email }
+      datos: { username, email },
     });
   }
 });
@@ -162,7 +168,9 @@ router.delete("/usuarios/:id", protectedRoute, isAdmin, async (req, res) => {
 
     // Validación de seguridad: No auto-eliminarse
     if (userId === req.userId) {
-      return res.render("error.njk", { error: "No puedes eliminarte a ti mismo" });
+      return res.render("error.njk", {
+        error: "No puedes eliminarte a ti mismo",
+      });
     }
 
     await User.findByIdAndDelete(userId);
@@ -185,4 +193,3 @@ router.delete("/usuarios", protectedRoute, isAdmin, async (req, res) => {
 });
 
 export default router;
-
