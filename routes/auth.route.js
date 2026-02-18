@@ -13,7 +13,6 @@ import {
   isAdmin,
 } from "../lib/auth.js";
 import User from "../models/user.model.js";
-//Hola
 
 const router = express.Router();
 
