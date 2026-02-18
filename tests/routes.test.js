@@ -7,7 +7,6 @@ beforeAll(async () => {
   await initializeDB();
 });
 
-//Hola
 afterAll(async () => {
   await mongoose.connection.close();
 });
