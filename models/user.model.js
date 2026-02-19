@@ -1,9 +1,5 @@
 import mongoose from "mongoose";
 
-// --------------------------------------------------------------------------
-// MODELO DE USUARIO
-// Rúbrica: Validació de dades estricta (Schema Mongoose).
-// --------------------------------------------------------------------------
 const userSchema = new mongoose.Schema({
   // Validación de nombre de usuario
   username: {
