@@ -34,6 +34,7 @@ services:
           target: /app
           ignore:
             - node_modules/
+            - .env
         - action: rebuild
           path: package.json
 

@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     unique: true, // Integridad: No permitir duplicados (Rúbrica)
     trim: true,
   },
-  // Validación de email
+  // Validación email
   email: {
     type: String,
     required: [true, "El email es obligatorio"],
