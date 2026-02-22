@@ -51,7 +51,7 @@ app.use(
       delete req.body._method;
       return method;
     }
-  })
+  }),
 );
 
 // Configuración de archivos estáticos (CSS, imágenes, JS del cliente)
@@ -68,6 +68,7 @@ app.use("/exposiciones", exposicionesRouter);
 app.use("/museos", museosRouter);
 app.use("/pintores", pintoresRouter);
 app.use("/auth", authRouter);
+app.use("/", pintoresRouter);
 
 // Iniciar el servidor solo en entorno local (no en Vercel) y no en tests
 if (!process.env.VERCEL && process.env.NODE_ENV !== "test") {
