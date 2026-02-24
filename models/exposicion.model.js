@@ -13,7 +13,7 @@ const exposicionSchema = new mongoose.Schema({
     type: String,
     trim: true,
     default: null // Puede ser nulo si no se especifica
-  },
+  }, //hola
   fechaInicio: {
     type: Date,
     required: true // Fecha de inicio obligatoria
