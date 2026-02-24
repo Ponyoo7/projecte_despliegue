@@ -7,7 +7,7 @@ const cuadroSchema = new mongoose.Schema({
     required: true, // El título es obligatorio
     trim: true, // Elimina espacios en blanco al inicio y final
     minlength: 2 // Longitud mínima de 2 caracteres
-  },
+  }, //gfg
   anyoCreacion: {
     type: Number,
     required: true, // El año de creación es obligatorio
