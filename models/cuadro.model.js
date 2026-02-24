@@ -13,7 +13,7 @@ const cuadroSchema = new mongoose.Schema({
     required: true, // El año de creación es obligatorio
     min: 1000, // Año mínimo permitido
     max: 2100 // Año máximo permitido
-  },
+  },//dev
   tecnica: {
     type: String,
     required: true, // La técnica es obligatoria
